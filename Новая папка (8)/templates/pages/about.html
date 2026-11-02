@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}О проекте — {% if company %}{{ company.company_name }}{% else %}DigitalHub{% endif %}{% endblock %}
+
+{% block content %}
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-hero__title">О проекте</h1>
+            <p class="breadcrumbs"><a href="{% url 'pages:home' %}">Главная</a> / О проекте</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container about">
+            <img src="{% static 'images/about-illustration.png' %}" alt="Иллюстрация команды DigitalHub" class="about__img reveal">
+            <div class="reveal">
+                <span class="section__tag">Кто мы</span>
+                <h2 class="section__title">{% if company %}{{ company.company_name }}{% else %}DigitalHub{% endif %} — ваш партнёр в digital</h2>
+                {% if company %}
+                    <div class="about__text">{{ company.description|linebreaks }}</div>
+                {% else %}
+                    <p class="about__text">Добавьте описание компании в панели администратора.</p>
+                {% endif %}
+                <a href="{% url 'pages:services' %}" class="btn btn-primary">Смотреть услуги</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--alt">
+        <div class="container">
+            <div class="section__head reveal">
+                <span class="section__tag">Как мы работаем</span>
+                <h2 class="section__title">Этапы работы</h2>
+            </div>
+            <div class="features">
+                <div class="feature reveal"><div class="feature__icon">1</div><h3 class="feature__title">Анализ</h3><p class="feature__text">Изучаем задачу и определяем подходящее решение.</p></div>
+                <div class="feature reveal"><div class="feature__icon">2</div><h3 class="feature__title">Разработка</h3><p class="feature__text">Проектируем, создаём и тестируем продукт.</p></div>
+                <div class="feature reveal"><div class="feature__icon">3</div><h3 class="feature__title">Запуск</h3><p class="feature__text">Публикуем проект и помогаем с дальнейшим развитием.</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="cta reveal">
+                <h2 class="cta__title">Готовы начать проект?</h2>
+                <p class="cta__text">Расскажите о задаче — обсудим следующий шаг.</p>
+                <a href="{% url 'pages:contact' %}" class="btn">Оставить заявку</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

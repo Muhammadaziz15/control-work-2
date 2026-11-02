@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% if site_company %}{{ site_company.description|striptags|truncatechars:160 }}{% endif %}">
+    <title>{% block title %}{% if site_company %}{{ site_company.company_name }}{% else %}DigitalHub{% endif %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/digitalhub-logo.png' %}" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include "includes/header.html" %}
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+    {% include "includes/footer.html" %}
+    <button class="to-top" type="button" aria-label="Наверх">↑</button>
+    <script src="{% static 'js/main.js' %}" defer></script>
+</body>
+</html>

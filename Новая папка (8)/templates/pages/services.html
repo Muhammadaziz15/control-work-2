@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Услуги — {% if company %}{{ company.company_name }}{% else %}DigitalHub{% endif %}{% endblock %}
+
+{% block content %}
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-hero__title">Услуги</h1>
+            <p class="breadcrumbs"><a href="{% url 'pages:home' %}">Главная</a> / Услуги</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="section__head reveal">
+                <span class="section__tag">Каталог</span>
+                <h2 class="section__title">Наши услуги и цены</h2>
+                <p class="section__text">Выберите услугу или свяжитесь с нами для индивидуального расчёта.</p>
+            </div>
+            {% if services %}
+                <div class="services">
+                    {% for service in services %}
+                        <article class="service-card reveal">
+                            {% if service.image %}
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="service-card__img">
+                            {% elif forloop.counter == 1 %}
+                                <img src="{% static 'images/service1.png' %}" alt="{{ service.name }}" class="service-card__img">
+                            {% elif forloop.counter == 2 %}
+                                <img src="{% static 'images/service2.png' %}" alt="{{ service.name }}" class="service-card__img">
+                            {% elif forloop.counter == 3 %}
+                                <img src="{% static 'images/service3.png' %}" alt="{{ service.name }}" class="service-card__img">
+                            {% endif %}
+                            <div class="service-card__body">
+                                <h3 class="service-card__title">{{ service.name }}</h3>
+                                <p class="service-card__text">{{ service.description|linebreaks }}</p>
+                                <div class="service-card__footer">
+                                    <span class="service-card__price">{{ service.price }} сом</span>
+                                    <a href="{% url 'pages:contact' %}" class="btn btn-outline">Заказать</a>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="section__text">Услуги пока не добавлены. Добавьте их в панели администратора.</p>
+            {% endif %}
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="cta reveal">
+                <h2 class="cta__title">Готовы начать проект?</h2>
+                <p class="cta__text">Расскажите о задаче — мы предложим подходящее решение.</p>
+                <a href="{% url 'pages:contact' %}" class="btn">Оставить заявку</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

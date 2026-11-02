@@ -1,0 +1,48 @@
+{% load static %}
+<footer class="footer">
+    <div class="container">
+        <div class="footer__grid">
+            <div>
+                <a class="logo" href="{% url 'pages:home' %}">
+                    <img src="{% static 'images/digitalhub-logo.png' %}" alt="">
+                    <span>{% if site_company %}{{ site_company.company_name }}{% else %}DigitalHub{% endif %}</span>
+                </a>
+                {% if site_company %}<p class="footer__desc">{{ site_company.description|truncatewords:24 }}</p>{% endif %}
+            </div>
+            <div>
+                <h2 class="footer__title">Навигация</h2>
+                <ul class="footer__list">
+                    <li><a href="{% url 'pages:home' %}">Главная</a></li>
+                    <li><a href="{% url 'pages:about' %}">О проекте</a></li>
+                    <li><a href="{% url 'pages:services' %}">Услуги</a></li>
+                    <li><a href="{% url 'pages:contact' %}">Контакты</a></li>
+                </ul>
+            </div>
+            {% if site_company %}
+                <div>
+                    <h2 class="footer__title">Контакты</h2>
+                    <ul class="footer__list">
+                        <li><a href="tel:{{ site_company.phone }}">{{ site_company.phone }}</a></li>
+                        <li><a href="mailto:{{ site_company.email }}">{{ site_company.email }}</a></li>
+                        <li>{{ site_company.address }}</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="footer__title">Социальные сети</h2>
+                    <div class="socials">
+                        {% if site_company.instagram_url %}<a href="{{ site_company.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>{% endif %}
+                        {% if site_company.facebook_url %}<a href="{{ site_company.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>{% endif %}
+                        {% if site_company.linkedin_url %}<a href="{{ site_company.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>{% endif %}
+                        {% if site_company.telegram_url %}<a href="{{ site_company.telegram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Telegram">TG</a>{% endif %}
+                        {% if site_company.whatsapp_url %}<a href="{{ site_company.whatsapp_url }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a>{% endif %}
+                        {% if site_company.youtube_url %}<a href="{{ site_company.youtube_url }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>{% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="footer__bottom">
+            <span>© {% now "Y" %} {% if site_company %}{{ site_company.company_name }}{% else %}DigitalHub{% endif %}</span>
+            <span>DigitalHub</span>
+        </div>
+    </div>
+</footer>

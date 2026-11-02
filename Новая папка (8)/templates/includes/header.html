@@ -1,0 +1,21 @@
+{% load static %}
+<header class="header">
+    <div class="container header__inner">
+        <a class="logo" href="{% url 'pages:home' %}" aria-label="На главную">
+            <img src="{% static 'images/digitalhub-logo.png' %}" alt="">
+            <span>{% if site_company %}{{ site_company.company_name }}{% else %}DigitalHub{% endif %}</span>
+        </a>
+        <button class="burger" type="button" aria-label="Открыть меню" aria-controls="primary-navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="primary-navigation" aria-label="Основная навигация">
+            <ul class="nav__list">
+                <li><a class="nav__link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'pages:home' %}">Главная</a></li>
+                <li><a class="nav__link{% if request.resolver_match.url_name == 'about' %} active{% endif %}" href="{% url 'pages:about' %}">О проекте</a></li>
+                <li><a class="nav__link{% if request.resolver_match.url_name == 'services' %} active{% endif %}" href="{% url 'pages:services' %}">Услуги</a></li>
+                <li><a class="nav__link{% if request.resolver_match.url_name == 'contact' %} active{% endif %}" href="{% url 'pages:contact' %}">Контакты</a></li>
+            </ul>
+            <a href="{% url 'pages:contact' %}" class="btn btn-primary">Связаться</a>
+        </nav>
+    </div>
+</header>

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if company %}{{ company.company_name }}{% else %}DigitalHub{% endif %} — главная{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="container hero__inner">
+            <div class="reveal">
+                <span class="section__tag">Digital-агентство</span>
+                <h1 class="hero__title">Цифровые решения для <span class="gradient-text">вашего бизнеса</span></h1>
+                {% if company %}
+                    <p class="hero__text">{{ company.description }}</p>
+                {% else %}
+                    <p class="hero__text">Добавьте описание компании в панели администратора.</p>
+                {% endif %}
+                <div class="hero__buttons">
+                    <a href="{% url 'pages:services' %}" class="btn btn-primary">Наши услуги</a>
+                    <a href="{% url 'pages:about' %}" class="btn btn-outline">О проекте</a>
+                </div>
+            </div>
+            <img src="{% static 'images/hero-illustration.png' %}" alt="Иллюстрация веб-проекта" class="hero__img reveal">
+        </div>
+    </section>
+
+    <section class="section section--alt">
+        <div class="container">
+            <div class="section__head reveal">
+                <span class="section__tag">Услуги</span>
+                <h2 class="section__title">Что мы делаем</h2>
+                <p class="section__text">Выберите услугу или свяжитесь с нами для индивидуального расчёта.</p>
+            </div>
+            {% if services %}
+                <div class="services">
+                    {% for service in services %}
+                        <article class="service-card reveal">
+                            {% if service.image %}
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="service-card__img">
+                            {% elif forloop.counter == 1 %}
+                                <img src="{% static 'images/service1.png' %}" alt="{{ service.name }}" class="service-card__img">
+                            {% elif forloop.counter == 2 %}
+                                <img src="{% static 'images/service2.png' %}" alt="{{ service.name }}" class="service-card__img">
+                            {% elif forloop.counter == 3 %}
+                                <img src="{% static 'images/service3.png' %}" alt="{{ service.name }}" class="service-card__img">
+                            {% endif %}
+                            <div class="service-card__body">
+                                <h3 class="service-card__title">{{ service.name }}</h3>
+                                <p class="service-card__text">{{ service.description|truncatewords:26 }}</p>
+                                <div class="service-card__footer">
+                                    <span class="service-card__price">{{ service.price }} сом</span>
+                                    <a href="{% url 'pages:contact' %}" class="btn btn-outline">Заказать</a>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="section__text">Услуги пока не добавлены. Добавьте их в панели администратора.</p>
+            {% endif %}
+            <div class="section__more">
+                <a href="{% url 'pages:services' %}" class="btn btn-primary">Все услуги</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section__head reveal">
+                <span class="section__tag">Преимущества</span>
+                <h2 class="section__title">Почему выбирают нас</h2>
+            </div>
+            <div class="features">
+                <div class="feature reveal"><div class="feature__icon">⚡</div><h3 class="feature__title">Быстро</h3><p class="feature__text">Чёткие сроки и поэтапная сдача проекта.</p></div>
+                <div class="feature reveal"><div class="feature__icon">🎯</div><h3 class="feature__title">Под ваши цели</h3><p class="feature__text">Решения строим вокруг задач бизнеса.</p></div>
+                <div class="feature reveal"><div class="feature__icon">🛡</div><h3 class="feature__title">Надёжно</h3><p class="feature__text">Поддержка проекта после запуска.</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="cta reveal">
+                <h2 class="cta__title">Готовы начать проект?</h2>
+                <p class="cta__text">Расскажите о задаче — мы предложим решение.</p>
+                <a href="{% url 'pages:contact' %}" class="btn">Оставить заявку</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

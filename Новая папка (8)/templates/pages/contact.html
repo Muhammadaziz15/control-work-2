@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты — {% if company %}{{ company.company_name }}{% else %}DigitalHub{% endif %}{% endblock %}
+
+{% block content %}
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-hero__title">Контакты</h1>
+            <p class="breadcrumbs"><a href="{% url 'pages:home' %}">Главная</a> / Контакты</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="contacts">
+                <div class="contact-info reveal">
+                    {% if company %}
+                        <div class="contact-item">
+                            <div class="contact-item__icon" aria-hidden="true">☎</div>
+                            <div>
+                                <div class="contact-item__label">Телефон</div>
+                                <div class="contact-item__value"><a href="tel:{{ company.phone }}">{{ company.phone }}</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item__icon" aria-hidden="true">✉</div>
+                            <div>
+                                <div class="contact-item__label">Email</div>
+                                <div class="contact-item__value"><a href="mailto:{{ company.email }}">{{ company.email }}</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item__icon" aria-hidden="true">⌖</div>
+                            <div>
+                                <div class="contact-item__label">Адрес</div>
+                                <div class="contact-item__value">{{ company.address }}</div>
+                            </div>
+                        </div>
+                        {% if company.instagram_url or company.facebook_url or company.linkedin_url or company.telegram_url or company.whatsapp_url or company.youtube_url %}
+                            <div class="contact-item">
+                                <div class="contact-item__icon" aria-hidden="true">◎</div>
+                                <div>
+                                    <div class="contact-item__label">Социальные сети</div>
+                                    <div class="socials" style="margin-top: 8px">
+                                        {% if company.instagram_url %}<a href="{{ company.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>{% endif %}
+                                        {% if company.facebook_url %}<a href="{{ company.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>{% endif %}
+                                        {% if company.linkedin_url %}<a href="{{ company.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>{% endif %}
+                                        {% if company.telegram_url %}<a href="{{ company.telegram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Telegram">TG</a>{% endif %}
+                                        {% if company.whatsapp_url %}<a href="{{ company.whatsapp_url }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a>{% endif %}
+                                        {% if company.youtube_url %}<a href="{{ company.youtube_url }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p class="section__text">Добавьте контакты компании в панели администратора.</p>
+                    {% endif %}
+                </div>
+
+                <form class="form reveal" action="{% url 'pages:contact' %}" method="post" novalidate>
+                    {% csrf_token %}
+                    <h2 class="form__title">Напишите нам</h2>
+                    {% for message in messages %}
+                        <div class="form__success show" role="status">{{ message }}</div>
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+                    <div class="form__row">
+                        <div class="form__group{% if form.name.errors %} error{% endif %}">
+                            <label for="{{ form.name.id_for_label }}">Имя</label>
+                            {{ form.name }}
+                            <div class="form__error">{% for error in form.name.errors %}{{ error }}{% endfor %}</div>
+                        </div>
+                        <div class="form__group{% if form.email.errors %} error{% endif %}">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            <div class="form__error">{% for error in form.email.errors %}{{ error }}{% endfor %}</div>
+                        </div>
+                    </div>
+                    <div class="form__group{% if form.phone.errors %} error{% endif %}">
+                        <label for="{{ form.phone.id_for_label }}">Телефон</label>
+                        {{ form.phone }}
+                        <div class="form__error">{% for error in form.phone.errors %}{{ error }}{% endfor %}</div>
+                    </div>
+                    <div class="form__group{% if form.message.errors %} error{% endif %}">
+                        <label for="{{ form.message.id_for_label }}">Сообщение</label>
+                        {{ form.message }}
+                        <div class="form__error">{% for error in form.message.errors %}{{ error }}{% endfor %}</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
